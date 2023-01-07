@@ -121,20 +121,20 @@ function post_stop {
 }
 
 function set_etc {
+	local MYGROUP="mygroup"
+	local MYGROUPGUID="2000"
 	#passwd file
 	local PASSWORDFILE="$JAILPATH/etc/passwd"
 	local I
 	echo "root:*:0:0:root:/root:/bin/bash" > "$PASSWORDFILE"
 	for (( I=$MIN_PRISONER_UGID ; $I < $MAX_PRISONER_UGID ; I+=1 )) ; do
-		echo "p$I:*:$I:$I:prisoner $I:/home/p$I:/bin/bash" >> "$PASSWORDFILE"
+		echo "p$I:*:$I:$MYGROUPGUID:prisoner $I:/home/p$I:/bin/bash" >> "$PASSWORDFILE"
 	done
 	chmod 644 "$PASSWORDFILE"
 	#group file
 	local GROUPFILE="$JAILPATH/etc/group"
 	echo "root:*:0:root" > "$GROUPFILE"
-	for (( I=$MIN_PRISONER_UGID ; $I < $MAX_PRISONER_UGID ; I+=1 )) ; do
-		echo "p$I:*:$I:p$I" >> "$GROUPFILE"
-	done
+	echo "$MYGROUP:*:$MYGROUPGUID:" >> "$GROUPFILE"
 	chmod 644 "$GROUPFILE"
 	local SHADOWFILE="$JAILPATH/etc/shadow"
 	chown root.root "$SHADOWFILE"
