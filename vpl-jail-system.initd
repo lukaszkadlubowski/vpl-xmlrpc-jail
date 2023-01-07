@@ -371,6 +371,8 @@ function start_vpl {
 		set_other /dev/pts
 		set_other /run
 		set_other /run/lock
+		set_other /cad # custom
+		set_other /eda # custom
 		set_snap
 	} 2>> $LOGFILE
 	start_daemon $DAEMON $1 $2
@@ -404,6 +406,8 @@ function stop_vpl {
 			exit 1
 		fi
 		unset_snap
+		unset_other /eda # custom
+		unset_other /cad # custom
 		unset_other /run/lock
 		unset_other /run
 		unset_other /dev/pts
