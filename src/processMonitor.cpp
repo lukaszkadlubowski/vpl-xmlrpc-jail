@@ -39,7 +39,7 @@ int processMonitor::requestsInProgress() {
  * Root mutate to be prisoner
  */
 void processMonitor::becomePrisoner(int prisoner) {
-	if (setresgid(prisoner, prisoner, prisoner)!= 0) {
+	if (setresgid(2000, 2000, 2000)!= 0) {
 		throw HttpException(internalServerErrorCode,
 				"I can't change to prisoner group", Util::itos(prisoner));
 	}
